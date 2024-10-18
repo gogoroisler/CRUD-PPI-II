@@ -1,0 +1,48 @@
+<!DOCTYPE html> <!-- Define el tipo de documento como HTML5 -->
+<html lang="es"> <!-- Establece el idioma de la página como español -->
+<head>
+    <meta charset="UTF-8"> <!-- Establece la codificación de caracteres como UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Configura la vista para dispositivos móviles -->
+    <title>CRUD de Series</title> <!-- Título de la página -->
+    <link rel="stylesheet" href="styles.css"> <!-- Vincula el archivo CSS para estilos -->
+</head>
+<body>
+    <h1>CRUD de Series</h1> <!-- Encabezado principal de la página -->
+    
+    <div id="message" style="color: green;"></div> <!-- Div para mostrar mensajes de éxito o error -->
+
+    <form id="recordForm"> <!-- Formulario para agregar un nuevo registro -->
+        <input type="text" id="title" placeholder="Título" required> <!-- Campo para el título de la serie -->
+        <input type="text" id="description" placeholder="Descripción" required> <!-- Campo para la descripción de la serie -->
+        <input type="date" id="original_air_date" required> <!-- Campo para la fecha de estreno -->
+        <input type="text" id="directed_by" placeholder="Dirigido por" required> <!-- Campo para el director -->
+        <input type="text" id="written_by" placeholder="Escrito por" required> <!-- Campo para el escritor -->
+        <input type="number" id="season" placeholder="Temporada" required> <!-- Campo para el número de temporada -->
+        <input type="number" id="number_in_season" placeholder="Número en temporada" required> <!-- Campo para el número del episodio en la temporada -->
+        <input type="number" id="number_in_series" placeholder="Número en serie" required> <!-- Campo para el número del episodio en la serie -->
+        <input type="number" id="us_viewers_in_millions" placeholder="Espectadores en millones" required> <!-- Campo para los espectadores en millones -->
+        <input type="number" id="imdb_rating" placeholder="Calificación IMDB" step="0.1" required> <!-- Campo para la calificación de IMDB -->
+        <input type="number" id="tmdb_rating" placeholder="Calificación TMDB" step="0.1" required> <!-- Campo para la calificación de TMDB -->
+        <button type="submit">Agregar</button> <!-- Botón para enviar el formulario -->
+    </form>
+
+    <!-- Filtros de búsqueda -->
+    <div>
+        <input type="text" id="filterTitle" placeholder="Buscar por título"> <!-- Campo para buscar por título -->
+        <input type="number" id="filterSeason" placeholder="Temporada"> <!-- Campo para filtrar por temporada -->
+        <input type="number" id="filterImdb" placeholder="Calificación IMDB mínima" step="0.1"> <!-- Campo para filtrar por calificación mínima de IMDB -->
+        <input type="number" id="filterTmdb" placeholder="Calificación TMDB mínima" step="0.1"> <!-- Campo para filtrar por calificación mínima de TMDB -->
+        <select id="filterDirector"> <!-- Lista desplegable para seleccionar director -->
+            <option value="">Seleccionar Director</option> <!-- Opción por defecto -->
+        </select>
+        <button id="searchButton">Buscar</button> <!-- Botón para realizar la búsqueda -->
+    </div>
+    
+    <!-- Botón para mostrar todos los registros -->
+    <button id="showAllButton">Mostrar Todos los Registros</button>
+
+    <ul id="recordList"></ul> <!-- Lista para mostrar los registros de series -->
+
+    <script src="script.js"></script> <!-- Vincula el archivo JavaScript para funcionalidad -->
+</body>
+</html>

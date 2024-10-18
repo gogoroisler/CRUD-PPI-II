@@ -1,0 +1,9 @@
+Configura el backend con Node.js
+Instala Node.js si no lo tienes ya.
+
+Crea un nuevo proyecto:
+
+mkdir crud-csv
+cd crud-csv
+npm init -y
+npm install express csv-parser json2csv cors body-parser
