@@ -50,9 +50,9 @@ app.post('/api/data', (req, res) => {
 // Eliminar un registro
 app.delete('/api/data/:id', (req, res) => {
     const id = req.params.id; // Obtiene el ID del registro a eliminar
-    const records = []; // Arreglo para almacenar los registros existentes
+    const records = [];
 
-    fs.createReadStream(CSV_FILE) // Crea un flujo de lectura para el archivo CSV
+    fs.createReadStream(CSV_FILE)
         .pipe(csv())
         .on('data', (data) => {
             if (data.id !== id) { // Solo almacena registros que no coincidan con el ID
@@ -65,8 +65,8 @@ app.delete('/api/data/:id', (req, res) => {
             res.status(204).end(); // Responde con un estado 204 (Sin contenido)
         })
         .on('error', (err) => {
-            console.error(err); // Imprime el error en la consola
-            res.status(500).send('Error al eliminar el registro.'); // Envía un mensaje de error si ocurre un problema
+            console.error(err);
+            res.status(500).send('Error al eliminar el registro.');
         });
 });
 
@@ -96,18 +96,22 @@ app.put('/api/data/:id', (req, res) => {
         });
 });
 
-// Endpoint para buscar registros por título y director
+// Endpoint para buscar registros con múltiples filtros
 app.get('/api/data/search', (req, res) => {
-    const { title, director } = req.query; // Obtiene título y director de la consulta
+    const { title, season, imdb_rating, tmdb_rating, directed_by } = req.query; // Obtiene los filtros de búsqueda
     const results = []; // Arreglo para almacenar los resultados de la búsqueda
 
     fs.createReadStream(CSV_FILE) // Crea un flujo de lectura para el archivo CSV
         .pipe(csv())
         .on('data', (data) => {
             const matchesTitle = title ? data.title.toLowerCase().includes(title.toLowerCase()) : true; // Verifica si el título coincide
-            const matchesDirector = director ? data.directed_by === director : true; // Verifica si el director coincide
-            if (matchesTitle && matchesDirector) { // Si ambos coinciden, agrega el registro a los resultados
-                results.push(data);
+            const matchesSeason = season ? parseInt(data.season) === parseInt(season) : true; // Verifica si la temporada coincide
+            const matchesImdb = imdb_rating ? parseFloat(data.imdb_rating) >= parseFloat(imdb_rating) : true; // Verifica calificación IMDB
+            const matchesTmdb = tmdb_rating ? parseFloat(data.tmdb_rating) >= parseFloat(tmdb_rating) : true; // Verifica calificación TMDB
+            const matchesDirector = directed_by ? data.directed_by === directed_by : true; // Verifica si el director coincide
+
+            if (matchesTitle && matchesSeason && matchesImdb && matchesTmdb && matchesDirector) {
+                results.push(data); // Agrega el registro si todos los filtros coinciden
             }
         })
         .on('end', () => {
@@ -123,4 +127,3 @@ app.get('/api/data/search', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`); // Mensaje de confirmación en la consola
 });
-
